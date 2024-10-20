@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Start Count Down</title>
+    <link rel="shortcut icon" href="assets/icon.png" type="image/x-icon">
+
+    <!-- Font Awesome CDN for Social Media Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    <style>
+        /* General Page Style */
+        body {
+            background: url(assets/background.jpg) no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Add a dark overlay */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            /* 70% opacity black */
+            z-index: 0;
+        }
+
+        .countdown {
+            text-align: center;
+            position: relative;
+            margin: auto;
+            z-index: 1;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 4rem;
+            letter-spacing: 0.2rem;
+        }
+
+        .timer {
+            font-size: 3rem;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .time-box {
+            background: rgba(177, 154, 154, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            animation: fadeIn 2s ease-in-out;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .time-box1 {
+            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            animation: fadeIn 2s ease-in-out;
+            width: 50%;
+            text-align: center;
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 2rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Footer Styles */
+        footer {
+            position: relative;
+            z-index: 1;
+            color: white;
+            text-align: center;
+            padding: 10px 20px;
+            font-size: 1rem;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            /* Horizontally center the content */
+            align-items: center;
+            flex-direction: column;
+            /* Stack text and icons vertically */
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        /* Social Media Icons */
+
+        .icons a {
+            background: rgba(177, 154, 154, 0.1);
+            ;
+            position: relative;
+            height: 50px;
+            width: 50px;
+            margin: 0 10px;
+            display: inline-flex;
+            text-decoration: none;
+            border-radius: 50%;
+            transition: all 0.3s;
+            box-shadow: -3px -3px 7px rgba(177, 154, 154, 0.1),
+                3px 3px 5px rgba(177, 154, 154, 0.1);
+
+        }
+
+        .icons a:hover:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            border-radius: 50%;
+            background: #443f3fc5;
+            box-shadow: inset -3px -3px 7px #443f3fc5,
+                inset 3px 3px 5px #443f3fc5;
+        }
+
+        .icons a i {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            width: 100%;
+            height: 100%;
+            font-size: 20px;
+            line-height: 50px;
+        }
+
+        .icons a:hover i {
+            transform: scale(0.9);
+        }
+
+        .icons a.fb i {
+            color: #4267B2;
+        }
+
+        .icons a.insta i {
+            color: #E1306C;
+        }
+
+        .icons a.git i {
+            color: #a5a3a3;
+        }
+
+        .icons a.yt i {
+            color: #ff0000;
+        }
+
+        .icons a.tele i {
+            color: #46a3c0;
+        }
+
+        /* Mouse couser move */
+
+        m {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #e1306c;
+            pointer-events: none;
+            animation: animate 2s linear forwards;
+            border-radius: 10px;
+        }
+
+        @keyframes animate {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(var(--x), var(--y));
+            }
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            h1 {
+                font-size: 3rem;
+            }
+
+            .timer {
+                font-size: 2.5rem;
+            }
+
+            .time-box span {
+                font-size: 1.5rem;
+            }
+
+            footer {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .timer {
+                font-size: 2rem;
+            }
+
+            .time-box {
+                min-width: 100px;
+                padding: 15px;
+            }
+
+            .time-box span {
+                font-size: 1.2rem;
+            }
+
+            footer {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .timer {
+                font-size: 1.5rem;
+                gap: 10px;
+            }
+
+            .time-box {
+                padding: 10px;
+            }
+
+            .time-box span {
+                font-size: 1rem;
+            }
+
+            footer {
+                font-size: 0.7rem;
+            }
+
+            .social-icons a {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="countdown">
+        <h1>Exam Start In</h1>
+        <div class="timer">
+            <div class="time-box">
+                <span id="days">00</span>
+                Days
+            </div>
+            <div class="time-box">
+                <span id="hours">00</span>
+                Hours
+            </div>
+            <div class="time-box">
+                <span id="minutes">00</span>
+                Minutes
+            </div>
+            <div class="time-box">
+                <span id="seconds">00</span>
+                Seconds
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <center>
+            <div class="time-box1">
+                <p>All The Best All Of You!</p>
+                <p>Dev ixAAr</p>
+            </div>
+        </center>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="icons">
+            <a href="https://facebook.com/BenushikaXIshRa" class="fb"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://t.me/Mr_Dev_ixAAr" class="tele"><i class="fab fa-telegram-plane"></i></a>
+            <a href="https://github.com/Dev-ixAAr" class="git"><i class="fab fa-github"></i></a>
+            <a href="https://www.instagram.com/mr_dev_ixaar/" class="insta"><i class="fab fa-instagram"></i></a>
+        </div>
+        <br>
+        <p>© 2024 Dev ixAAr. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function countdownTimer() {
+            const launchDate = new Date("Nov 25, 2024 08:00:00").getTime();
+            const x = setInterval(function () {
+                const now = new Date().getTime();
+                const distance = launchDate - now;
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById("days").innerHTML = days;
+                document.getElementById("hours").innerHTML = hours;
+                document.getElementById("minutes").innerHTML = minutes;
+                document.getElementById("seconds").innerHTML = seconds;
+
+                if (distance < 0) {
+                    clearInterval(x);
+                    document.querySelector(".countdown").innerHTML = "Game Launched!";
+                }
+            }, 1000);
+        }
+
+        countdownTimer();
+
+        // Custom cursor movement
+        function spark(event) {
+            let m = document.createElement('m');
+            m.style.left = (event.pageX) + 'px';
+            m.style.top = (event.pageY) + 'px';
+            m.style.scale = `${Math.random() * 2 + 1}`;
+            m.style.setProperty('--x', getRandomTransitionValue());
+            m.style.setProperty('--y', getRandomTransitionValue());
+            document.body.appendChild(m);
+
+            setTimout(() => {
+                document.body.removeChild(m);
+            }, 2000)
+        }
+
+        function getRandomTransitionValue() {
+            return `${Math.random() * 400 - 200}px`;
+        }
+
+        document.addEventListener('mousemove', spark)
+    </script>
+
+</body>
+
+</html>
